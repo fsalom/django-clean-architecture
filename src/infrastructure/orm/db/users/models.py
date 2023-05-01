@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from src.data.orm.db.users.managers import CustomUserManager
+from src.infrastructure.orm.db.users.managers import CustomUserManager
 
 
 class CustomUser(AbstractUser):
