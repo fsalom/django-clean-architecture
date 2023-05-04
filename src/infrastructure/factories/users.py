@@ -1,20 +1,9 @@
 # coding: utf-8
-
-from src.infrastructure.factories.provider import ProviderClientInteractorFactory
-from src.infrastructure.orm.cache.exchange_rate.repositories import (
-    CurrencyCacheRepository, CurrencyExchangeRateCacheRepository)
-from src.infrastructure.orm.db.exchange_rate.repositories import (
-    CurrencyDatabaseRepository, CurrencyExchangeRateDatabaseRepository)
-from src.interface.controllers.exchange_rate import (
-    CurrencyController, CurrencyExchangeRateController)
-from src.interface.repositories.exchange_rate import (
-    CurrencyRepository, CurrencyExchangeRateRepository)
-from src.usecases.exchange_rate import (
-    CurrencyInteractor, CurrencyExchangeRateInteractor)
-
 from src.domain.usecases.users import UserUseCase
+from src.infrastructure.orm.cache.users import UserCacheRepository
 from src.infrastructure.orm.db.users.repositories import UserDatabaseRepository
 from src.interfaces.controllers.users import UserController
+from src.interfaces.repositories.users import UserRepository
 
 
 class UserDatabaseRepositoryFactory:
@@ -27,17 +16,17 @@ class UserDatabaseRepositoryFactory:
 class UserCacheRepositoryFactory:
 
     @staticmethod
-    def get() -> CurrencyCacheRepository:
-        return CurrencyCacheRepository()
+    def get() -> UserCacheRepository:
+        return UserCacheRepository()
 
 
 class UserRepositoryFactory:
 
     @staticmethod
-    def get() -> CurrencyRepository:
+    def get() -> UserRepository:
         db_repo = UserDatabaseRepositoryFactory.get()
         cache_repo = UserCacheRepositoryFactory.get()
-        return CurrencyRepository(db_repo, cache_repo)
+        return UserRepository(db_repo, cache_repo)
 
 
 class UserUseCaseFactory:

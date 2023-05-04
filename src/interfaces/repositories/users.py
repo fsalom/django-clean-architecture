@@ -10,7 +10,7 @@ class UserRepository:
         self.cache_repo = cache_repo
 
     def list(self) -> List[UserEntity]:
-        users = self.cache_repo.get_availables()
+        users = self.cache_repo.list()
         if not users:
-            users = self.db_repo.get_availables()
+            users = self.db_repo.list()
         return users

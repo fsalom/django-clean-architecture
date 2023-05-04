@@ -12,7 +12,7 @@ class UserCacheRepository:
     def get(self, key: str) -> UserEntity:
         return cache.get(key)
 
-    def get_availables(self) -> List[UserEntity]:
+    def list(self) -> List[UserEntity]:
         return self.get(CACHE_AVAILABLE_CURRENCIES_KEY)
 
     def save(self, key: str, value: Union[UserEntity, list]):
