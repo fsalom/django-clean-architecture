@@ -5,7 +5,7 @@ from rest_framework.viewsets import ViewSet
 from src.interfaces.controllers.users import UserController
 
 
-class CurrencyViewSet(ViewSet):
+class UserViewSet(ViewSet):
     viewset_factory = None
 
     @property
