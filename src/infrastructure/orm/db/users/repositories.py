@@ -17,8 +17,6 @@ class UserDatabaseRepository:
 
     def list(self) -> List[UserEntity]:
         users = CustomUser.objects.values()
-        filtered_users = list(map(lambda x: {'id': x['id'], 'email': x['email'], 'first_name': x['first_name']}, users))
-        print('Filtered users:', filtered_users)  # Agrega este registro para verificar los usuarios filtrados
+        filtered_users = list(map(lambda x: {'email': x['email'], 'first_name': x['first_name']}, users))
         entities = list(map(lambda x: UserEntity(**x), filtered_users))
-        print('User entities:', entities)  # Agrega este registro para verificar las entidades de usuario creadas
         return entities
