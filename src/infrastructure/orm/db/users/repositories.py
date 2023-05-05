@@ -1,6 +1,4 @@
 # coding: utf-8
-import dataclasses
-import json
 from typing import List
 from src.domain.entities.users import UserEntity
 from src.infrastructure.orm.db.users.models import CustomUser
