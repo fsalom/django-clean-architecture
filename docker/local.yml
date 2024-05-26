@@ -9,7 +9,7 @@ services:
     ports:
       - '127.0.0.1:8000:8000'
     env_file: 'environments/local.env'
-    command: 'gunicorn config.wsgi:application -k gevent -w 3 -b :8000 --worker-connections=1000 --reload --capture-output --enable-stdio-inheritance --log-level=debug --access-logfile=- --log-file=-'
+    command: 'gunicorn src.infrastructure.settings.wsgi -k gevent -w 3 -b :8000 --worker-connections=1000 --reload --capture-output --enable-stdio-inheritance --log-level=debug --access-logfile=- --log-file=-'
     volumes:
       - cachedata:/cache
       - mediadata:/media
