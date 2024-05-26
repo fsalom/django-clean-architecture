@@ -1,6 +1,6 @@
-
+from collections.abc import Iterable
 # Allowed http verbs
-from collections import Iterable
+
 from dataclasses import dataclass
 from typing import Callable, Union
 
