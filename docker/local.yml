@@ -1,6 +1,6 @@
 services:
-  web:
-    container_name: web
+  backend:
+    container_name: backend
     restart: always
     build:
       context: ..
@@ -35,7 +35,7 @@ services:
     volumes:
       - 'backend:/code'
     depends_on:
-      - web
+      - backend
 
   celery_beat:
     container_name: 'celery_beat'
@@ -45,7 +45,7 @@ services:
     volumes:
       - 'backend:/code'
     depends_on:
-      - web
+      - backend
 
   redis:
     container_name: 'redis'
