@@ -7,8 +7,8 @@ bup:
 	 docker-compose -f $(ENV) rm -f && \
 	 docker-compose -f $(ENV) up -d && \
 	 docker system prune --force && \
-	 docker exec -it web python manage.py migrate && \
-	 docker exec -it web python manage.py load_offline_days
+	 docker exec -it backend python3 manage.py migrate && \
+	 docker exec -it backend python3 manage.py load_offline_days
 
 
 bup_lite:
@@ -48,7 +48,7 @@ up:
 	docker-compose -f $(LOCAL) up
 
 migrate:
-	docker-compose -f $(ENV) exec web python manage.py migrate
+	docker-compose -f $(ENV) exec backend python3 manage.py migrate
 
 migratepro: ENV:=$(PRODUCTION)
 migratepro: migrate
@@ -58,7 +58,7 @@ migratedev: migrate
 
 
 collectstatic:
-	docker-compose -f $(ENV) exec backend /venv/bin/python manage.py collectstatic
+	docker-compose -f $(ENV) exec backend /venv/bin/python3 manage.py collectstatic
 
 collectpro: ENV:=$(PRODUCTION)
 collectpro: collectstatic
@@ -66,9 +66,14 @@ collectpro: collectstatic
 collectdev: ENV:=$(DEVELOPMENT)
 collectdev: collectstatic
 
+preparelocal:
+	docker exec -it backend python3 manage.py collectstatic
+	docker exec -it backend python3 manage.py makemigrations
+	docker exec -it backend python3 manage.py migrate
+	docker exec -it backend python3 manage.py createsuperuser
 
 superuser:
-	docker-compose -f $(ENV) exec backend /venv/bin/python manage.py createsuperuser
+	docker-compose -f $(ENV) exec backend /venv/bin/python3 manage.py createsuperuser
 
 superuserpro: ENV:=$(PRODUCTION)
 superuserpro: superuser
@@ -76,18 +81,11 @@ superuserpro: superuser
 superuserdev: ENV:=$(DEVELOPMENT)
 superuserdev: superuser
 
-createyear:
-	docker-compose -f $(ENV) exec backend /venv/bin/python manage.py create_year
-
-createyearpro: ENV:=$(PRODUCTION)
-createyearpro: createyear
-
-createyeardev: ENV:=$(DEVELOPMENT)
-createyeardev: createyear
-
+superuserlocal: ENV:=$(LOCAL)
+superuserlocal: superuser
 
 mm:
-	(cd sources && python manage.py makemigrations)
+	(cd sources && python3 manage.py makemigrations)
 
 mu:
-	docker-compose exec backend python manage.py migrate
+	docker-compose exec backend python3 manage.py migrate
